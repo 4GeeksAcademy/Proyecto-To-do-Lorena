@@ -1,28 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
-const Home = () => {
+const Todo = ()=>{
+	const [inputValue, setInputValue] = useState("");
+	const [todos,setTodos] = useState([])
+	 const handleOnChange = (e)=>{
+		setInputValue(e.target.value)
+	 }
+	 const handleOnClick = ()=>{
+		setTodos([...todos,inputValue])
+		setInputValue("")
+	 }
+	 const handleDelete=(index)=>{
+		const updateTodos = todos.filter((todos,i)=> i !== index)
+		setTodos(updateTodos)
+	 }
 	return (
-		<div className="text-center">
-            
+		<div className="container">
+			<h2> To do </h2>
+			<div className="container_input">
+				<input type="text"  value={inputValue} onChange={handleOnChange}/>
+				<button className=" btn-add" onClick={handleOnClick}>Add</button>
+				</div>
+				
+				<ul>
+					{
+						todos.length > 0 ? todos.map((todo,index)=>{
+							return(
+							<li key={index}>{todo} <button className=" btn-delete" onClick={()=>{handleDelete(index)}}>Delete</button></li>
+						)
+						})
+						:
+						<p>Tasks</p>
+					}
+				</ul>
+		</div>
+	)
 
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+}
+function Home(){
+	return(
+		<div className="Home">
+			<Todo/>
 		</div>
 	);
-};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default Home;
